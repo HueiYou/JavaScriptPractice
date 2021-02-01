@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>九九乘法表</title>
+    </head>
+    <body>
+        <p>請看console</p>
+
+        <script>
+            // 乘法表1
+            let html = "";
+            for (var i = 1; i <= 9; i++) {
+                for (var j = 1; j <= 9; j++) {
+                    html += `${i} * ${j} = ${
+                        i * j
+                    } \t`;
+                }
+
+                html += "\n";
+            }
+
+            console.log("乘法表1");
+            console.log(html);
+
+            // 乘法表2
+            let html2 = "";
+            for (var i = 1; i <= 9; i++) {
+                for (var j = 1; j <= 9; j++) {
+                    html2 += `${j} * ${i} = ${
+                        i * j
+                    } \t`;
+                }
+
+                html2 += "\n";
+            }
+
+            console.log("乘法表2");
+            console.log(html2);
+
+            // 乘法表3
+            let html3 = "";
+            for (var i = 1; i <= 9; i++) {
+                for (var j = 1; j <= i; j++) {
+                    html3 += `${i} * ${j} = ${
+                        i * j
+                    } \t`;
+                }
+
+                html3 += "\n";
+            }
+
+            console.log("乘法表3");
+            console.log(html3);
+
+            // 乘法表4
+            let html4 = "";
+            for (var i = 1; i <= 9; i++) {
+                for (var j = i; j <= 9; j++) {
+                    html4 += `${i} * ${j} = ${
+                        i * j
+                    } \t`;
+                }
+
+                html4 += "\n";
+            }
+
+            console.log("乘法表4");
+            console.log(html4);
+        </script>
+    </body>
+</html>
