@@ -8,12 +8,15 @@
     <title>jqGrid練習</title>
     <!-- 載入jqGrid所需CSS、JS -->
 
-    <!-- jqGrid组件基础样式包-必要 -->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/css/ui.jqgrid.css' />
+    <!-- jqGrid组件基础样式包-必要(若有其他主題包則不用) -->
+    <!-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/css/ui.jqgrid.css' /> -->
     <!-- jqGrid主题包(Bootstrap)-非必要 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="jqgrid/css/css/redmond/jquery-ui-1.8.16.custom.css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/css/ui.jqgrid-bootstrap4.min.css"
+        integrity="sha512-8sjbSnDUAQ3qZbtEpoIml0YyRwcNWQKJDz72xwTt4MJcBypdnU6H3sseN++iBXOGVuk24Nw933LkL836EaEqmA=="
+        crossorigin="anonymous" />
 
     <!-- jquery插件包-必要 -->
     <!-- 这个是所有jquery插件的基础，首先第一个引入 -->
@@ -21,19 +24,27 @@
         integrity='sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=='
         crossorigin='anonymous'></script>
 
-    <!-- jqGrid插件包-必要 -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/js/jquery.jqGrid.js'
-        integrity='sha512-b+3X1hP2gyA0PTdSCexVnZEF8pyXJib1BbChdCP1hEQzlXaUmOEl+d34Lzwiuyh9qAZxpgWWes6OhSbAeNTRDg=='
-        crossorigin='anonymous'></script>
     <!-- jqGrid插件的多语言包-非必要 -->
     <!-- 在jqgrid/js/i18n下还有其他的多语言包，可以尝试更换看效果 -->
-    <!-- <script type="text/javascript" src="jqgrid/js/i18n/grid.locale-cn.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/js/i18n/grid.locale-tw.min.js"
+        integrity="sha512-3uN7RwxHGuhsStwabL2qEFuJz6ticliG25T2X/CP+t0ks/n6JuumIIxNxrPBrmkfrFO1frgLu2WCDhHtgoa4XQ=="
+        crossorigin="anonymous"></script>
+    <!-- jqGrid插件包-必要 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/js/jquery.jqGrid.min.js"
+        integrity="sha512-V9ColozUAesKFuxLlzgcIYmjWe/nz9YXaLd3++zLbiNI9W8p/irBaf4P/uOxJTvYZ/2LNIR+R9P3dDdjq0RKLw=="
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     <!-- 表格標籤(須為table) 1. Jquery插件 屬性 對象 事件 方法 -->
     <table id="table"></table>
-
     <script>
         // 初始化表格
         $("#table").jqGrid({    // 屬性(參考https://blog.mn886.net/jqGrid/)
@@ -81,7 +92,7 @@
                         return rowObject.Dept.Name;
                     }
                 },
-            ]
+            ],
         });
     </script>
 </body>
