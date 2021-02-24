@@ -1,0 +1,37 @@
+{
+    "page": 1,
+    "total": 2,
+    "records": "13",
+    "rows": [
+        {
+            "Id": "1",
+            "Name": "Amy",
+            "Age": 18,
+            "Birthday": "2020-10-20",
+            "Dept": {
+                "Id": "1",
+                "Name": "會計部"
+            }
+        },
+        {
+            "Id": "2",
+            "Name": "Bob",
+            "Age": 20,
+            "Birthday": "2020-05-05",
+            "Dept": {
+                "Id": "2",
+                "Name": "電算部"
+            }
+        },
+        {
+            "Id": "3",
+            "Name": "CoCo",
+            "Age": 4,
+            "Birthday": "2021-11-24",
+            "Dept": {
+                "Id": "1",
+                "Name": "人事部"
+            }
+        }
+    ]
+}
