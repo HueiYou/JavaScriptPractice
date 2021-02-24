@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jqGrid練習</title>
+    <!-- 載入jqGrid所需CSS、JS -->
+
+    <!-- jqGrid组件基础样式包-必要 -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/css/ui.jqgrid.css' />
+    <!-- jqGrid主题包(Bootstrap)-非必要 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="jqgrid/css/css/redmond/jquery-ui-1.8.16.custom.css" /> -->
+
+    <!-- jquery插件包-必要 -->
+    <!-- 这个是所有jquery插件的基础，首先第一个引入 -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js'
+        integrity='sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=='
+        crossorigin='anonymous'></script>
+
+    <!-- jqGrid插件包-必要 -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/js/jquery.jqGrid.js'
+        integrity='sha512-b+3X1hP2gyA0PTdSCexVnZEF8pyXJib1BbChdCP1hEQzlXaUmOEl+d34Lzwiuyh9qAZxpgWWes6OhSbAeNTRDg=='
+        crossorigin='anonymous'></script>
+    <!-- jqGrid插件的多语言包-非必要 -->
+    <!-- 在jqgrid/js/i18n下还有其他的多语言包，可以尝试更换看效果 -->
+    <!-- <script type="text/javascript" src="jqgrid/js/i18n/grid.locale-cn.js"></script> -->
+</head>
+
+<body>
+    <!-- 表格標籤(須為table) 1. Jquery插件 屬性 對象 事件 方法 -->
+    <table id="table"></table>
+
+    <script>
+        // 初始化表格
+        $("#table").jqGrid({    // 屬性(參考https://blog.mn886.net/jqGrid/)
+            styleUI: "Bootstrap",   // 用來指定jqGrid的主題樣式，固定寫死必須是Bootstrap
+            url: "list.json", // 用來call api參數 json格式類型 [{"id": "1", "name": "張三"}, {}]
+            datatype: "json",   // 用來指定API返回的數據類型 默認值是XML，請設定該欄為json
+            mtype: "GET",   // 用來指定請求方式 默認GET方式請求
+            colNames: ["編號", "姓名", "年齡", "生日", "部門"], // 用來指定表格中的標題列名稱   colNames和colModel 必須成對出現 長度一致
+            colModel: [
+                {
+                    name: "Id", // 欄位對應
+                    align: "center",    // 對齊置中
+                    hidedlg: true,  // 是否顯示或隱藏此列
+                    hidden: true,   // 在初始化表格時是否要隱藏此列
+                },
+                {
+                    name: "Name",
+                    align: "center",    // 對齊置中
+                    editable: true, // 是否可編輯欄位(有編輯功能時可用)
+                    resizable: false,    // 是否可調整欄位寬度，默認可調
+                    width: 300  // 默認列的寬度，只能是象素值，不能是百分比
+                },
+                {
+                    name: "Age",
+                    align: "center",    // 對齊置中
+                    formatter: function (cellvalue, options, rowObject) {    // 用來對列進行二次處理
+                        // console.log(cellvalue); // 當前欄資料
+                        // console.log(options); // 當前列配置參數資料
+                        // console.log(rowObject); // 當前列全部資料(包含沒顯示的值)
+                        if (cellvalue > 18) {
+                            return '<span style="color:green;">已成年</span>';
+                        }
+
+                        return '<span style="color:red;">未成年</span>';
+                    }
+                },
+                {
+                    name: "Birthday",
+                    align: "center",    // 對齊置中
+                },
+                {
+                    name: "DeptName",
+                    align: "center",    // 對齊置中
+                    formatter: function (cellvalue, options, rowObject) {
+                        return rowObject.Dept.Name;
+                    }
+                },
+            ]
+        });
+    </script>
+</body>
+
+</html>
