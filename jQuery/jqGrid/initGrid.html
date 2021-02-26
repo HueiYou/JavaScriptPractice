@@ -45,14 +45,11 @@
 <body>
     <!-- 表格標籤(須為table) 1. Jquery插件 屬性 對象 事件 方法 -->
     <table id="table"></table>
-
-    <!-- 定義展示分頁的標籤(可以該頁面任何地方加該標籤，jqGrid會根據id自動綁定到表格內) -->
-    <div id="pager"></div>
     <script>
         // 初始化表格
         $("#table").jqGrid({    // 屬性(參考https://blog.mn886.net/jqGrid/)
             styleUI: "Bootstrap",   // 用來指定jqGrid的主題樣式，固定寫死必須是Bootstrap
-            url: "listPage.json", // 用來call api參數 json格式類型 [{"id": "1", "name": "張三"}, {}]
+            url: "list.json", // 用來call api參數 json格式類型 [{"id": "1", "name": "張三"}, {}]
             datatype: "json",   // 用來指定API返回的數據類型 默認值是XML，請設定該欄為json
             mtype: "GET",   // 用來指定請求方式 默認GET方式請求
             colNames: ["編號", "姓名", "年齡", "生日", "部門"], // 用來指定表格中的標題列名稱   colNames和colModel 必須成對出現 長度一致
@@ -68,7 +65,7 @@
                     align: "center",    // 對齊置中
                     editable: true, // 是否可編輯欄位(有編輯功能時可用)
                     resizable: false,    // 是否可調整欄位寬度，默認可調
-                    width: 300  // 默認列的寬度為150，只能是象素值，不能是百分比
+                    width: 300  // 默認列的寬度，只能是象素值，不能是百分比
                 },
                 {
                     name: "Age",
@@ -96,19 +93,6 @@
                     }
                 },
             ],
-            // 注意: 一但做了分頁處理後數據返回格式必須為: 
-            pager: "#pager",    // 用來定義分頁工具欄 用來處理分頁請求: 後臺可以定義Interger page(當前頁) Interger rows(每頁顯示的筆數)
-            viewrecords: true,  // 顯示總筆數
-            rowNum: 5,  // 每頁顯示筆數，默認是20
-            rowList: [2, 10, 15, 50, 100], // 用來定義一個下拉列表，可選頁面展示多少筆數據
-            sortname: "Name",   // 根據哪個列排序，該參數會傳給後端處理 後端接收參數為: sidx
-            caption: "員工列表",   // 該table的標題及縮合表格按鈕
-            hidegrid: true, // 是否在標題下展示縮合表格按鈕 false: 不顯示 true: 顯示
-            autowidth: true,    // 自適應父容器寬度
-            height: "100%",    // 指定表格高度，可以是象素值、百分比
-            pagerpos: "left",   // 顯示分頁欄位置
-            pgbuttons: false,    // 是否顯示換頁按鈕(bootstrap4的按鈕不知道為啥都不會顯示所以這邊先隱藏)
-            pginput: true,  // 是否顯示跳轉頁面的輸入框
         });
     </script>
 </body>
