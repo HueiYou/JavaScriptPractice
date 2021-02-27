@@ -41,6 +41,13 @@
     <!-- 定義展示分頁的標籤(可以該頁面任何地方加該標籤，jqGrid會根據id自動綁定到表格內) -->
     <div id="pager"></div>
     <script>
+        /**
+         * 1. jqgrid的表格屬性使用方式: 將屬性以對象(物件)方式作為jqgrid的參數進行傳遞即可，格式為 屬性名:屬性值 書寫
+         * 2. jqgrid表格中列屬性使用方式: 列屬性使用也是以對象的形式作為colModel的參數進行傳遞即可
+         * 3. jqgrid中事件的使用方式: 將對應事件以對象方式作為jqgrid的參數進行傳遞即可
+         * 4. jqgrid中方法的使用方式: 對應jqgrid組件選擇器.jqgrid('方法名', 參數列表)
+        */
+
         // 初始化表格
         $("#table").jqGrid({    // 屬性(參考https://blog.mn886.net/jqGrid/)
             styleUI: "Bootstrap",   // 用來指定jqGrid的主題樣式，固定寫死必須是Bootstrap
@@ -138,6 +145,15 @@
             pgbuttons: false,    // 是否顯示換頁按鈕(bootstrap4的按鈕不知道為啥都不會顯示所以這邊先隱藏)
             pginput: true,  // 是否顯示跳轉頁面的輸入框
             editurl: "/user/edits", // CRUD時的url設定(會傳一個oper參數來辨別是什麼動作，add:新增 edit:編輯 del:刪除)
+            gridComplete: function () {   // 事件使用，當初次載入和重載grid時都會觸發
+                // 載入完成的處理
+            },
+            onCellSelect: function (rowid, iCol, cellcontent, e) {    // 點擊單元格會觸發該事件
+                console.log(rowid); // 第n列的row id
+                console.log(iCol);  // 行索引值(從1開始)
+                console.log(cellcontent);   // 該欄值
+                console.log(e); // 觸發事件的元素
+            }
         }).navGrid("#pager",
             {
                 add: true,
@@ -191,6 +207,17 @@
             },  // 搜尋列表的配置(會向後端傳三個參數: searchField是搜尋的欄位名稱；searchString是搜尋字串; searchOper是比較方式)
             // 刷新列表的配置
         );
+
+        // 自訂按鈕
+        $("#table").jqGrid('navButtonAdd', "#pager", {
+            caption: "审计",
+            buttonicon: 'ace-icon fa fa-lock red',
+            title: '审计日志',
+            id: 'sj',
+            onClickButton: function () {
+                // 點擊觸發事件
+            }
+        });
     </script>
 </body>
 
