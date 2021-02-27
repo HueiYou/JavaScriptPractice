@@ -7,6 +7,7 @@
             "Id": "1",
             "Name": "Amy",
             "Age": 18,
+            "Sex": 2,
             "Birthday": "2020-10-20",
             "Dept": {
                 "Id": "1",
@@ -17,6 +18,7 @@
             "Id": "2",
             "Name": "Bob",
             "Age": 20,
+            "Sex": 1,
             "Birthday": "2020-05-05",
             "Dept": {
                 "Id": "2",
@@ -27,6 +29,7 @@
             "Id": "3",
             "Name": "CoCo",
             "Age": 4,
+            "Sex": 2,
             "Birthday": "2021-11-24",
             "Dept": {
                 "Id": "1",

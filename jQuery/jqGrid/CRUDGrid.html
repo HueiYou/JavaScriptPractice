@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jqGrid練習</title>
+    <!-- 載入jqGrid所需CSS、JS -->
+
+    <!-- jqGrid组件基础样式包-必要(若有其他主題包則不用) -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/css/ui.jqgrid.css' />
+    <!-- jqGrid主题包(Bootstrap)-非必要 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/css/ui.jqgrid-bootstrap4.min.css"
+        integrity="sha512-8sjbSnDUAQ3qZbtEpoIml0YyRwcNWQKJDz72xwTt4MJcBypdnU6H3sseN++iBXOGVuk24Nw933LkL836EaEqmA=="
+        crossorigin="anonymous" />
+
+    <!-- jquery插件包-必要 -->
+    <!-- 这个是所有jquery插件的基础，首先第一个引入 -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js'
+        integrity='sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=='
+        crossorigin='anonymous'></script>
+
+    <!-- jqGrid插件的多语言包-非必要 -->
+    <!-- 在jqgrid/js/i18n下还有其他的多语言包，可以尝试更换看效果 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/js/i18n/grid.locale-tw.min.js"
+        integrity="sha512-3uN7RwxHGuhsStwabL2qEFuJz6ticliG25T2X/CP+t0ks/n6JuumIIxNxrPBrmkfrFO1frgLu2WCDhHtgoa4XQ=="
+        crossorigin="anonymous"></script>
+    <!-- jqGrid插件包-必要 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/5.5.4/js/jquery.jqGrid.min.js"
+        integrity="sha512-V9ColozUAesKFuxLlzgcIYmjWe/nz9YXaLd3++zLbiNI9W8p/irBaf4P/uOxJTvYZ/2LNIR+R9P3dDdjq0RKLw=="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- 表格標籤(須為table) 1. Jquery插件 屬性 對象 事件 方法 -->
+    <table id="table"></table>
+
+    <!-- 定義展示分頁的標籤(可以該頁面任何地方加該標籤，jqGrid會根據id自動綁定到表格內) -->
+    <div id="pager"></div>
+    <script>
+        // 初始化表格
+        $("#table").jqGrid({    // 屬性(參考https://blog.mn886.net/jqGrid/)
+            styleUI: "Bootstrap",   // 用來指定jqGrid的主題樣式，固定寫死必須是Bootstrap
+            url: "listPage.json", // 用來call api參數 json格式類型 [{"id": "1", "name": "張三"}, {}]
+            datatype: "json",   // 用來指定API返回的數據類型 默認值是XML，請設定該欄為json
+            mtype: "GET",   // 用來指定請求方式 默認GET方式請求
+            colNames: ["編號", "姓名", "年齡", "性別", "生日", "部門"], // 用來指定表格中的標題列名稱   colNames和colModel 必須成對出現 長度一致
+            colModel: [
+                {
+                    name: "Id", // 欄位對應
+                    align: "center",    // 對齊置中
+                    editable: true, // 是否可編輯欄位(有編輯功能時可用)
+                    hidedlg: true,  // 是否顯示或隱藏此列
+                    hidden: true,   // 在初始化表格時是否要隱藏此列
+                },
+                {
+                    name: "Name",
+                    align: "center",    // 對齊置中
+                    editable: true, // 是否可編輯欄位(有編輯功能時可用)
+                    resizable: false,    // 是否可調整欄位寬度，默認可調
+                    width: 300,  // 默認列的寬度為150，只能是象素值，不能是百分比
+                    sortable: true, // 是否可排序
+                },
+                {
+                    name: "Age",
+                    align: "center",    // 對齊置中
+                    editable: true, // 是否可編輯欄位(有編輯功能時可用)
+                    formatter: function (cellvalue, options, rowObject) {    // 用來對列進行二次處理
+                        // console.log(cellvalue); // 當前欄資料
+                        // console.log(options); // 當前列配置參數資料
+                        // console.log(rowObject); // 當前列全部資料(包含沒顯示的值)
+                        
+						// 注意這邊渲染的HTML值將為編輯時的值，因此如果要抓年齡值的話，就不要做二次處理渲染
+                        if (cellvalue > 18) {
+                            return '<span style="color:green;">已成年</span>';
+                        }
+
+                        return '<span style="color:red;">未成年</span>';
+                    },
+                    sortable: true, // 是否可排序
+                },
+                {
+                    name: "Sex",
+                    align: "center",    // 對齊置中
+                    editable: true, // 是否可編輯欄位(有編輯功能時可用)
+                    formatter: function (cellvalue, options, rowObject) {
+                        if (cellvalue == 1) {
+                            return "男";
+                        }
+                        else {
+                            return "女";
+                        }
+                    },
+                    // 新增/編輯下拉選單設定(本機寫死資料)
+                    edittype: "select",
+                    editoptions: {
+                        multiple: true, // 實現下拉多選
+                        value: "1:男;2:女"  // string型別，格式為"value:text;value:text"
+                    },
+                    sortable: true, // 是否可排序
+                },
+                {
+                    name: "Birthday",
+                    align: "center",    // 對齊置中
+                    editable: true, // 是否可編輯欄位(有編輯功能時可用)
+                    sortable: true, // 是否可排序
+                },
+                {
+                    name: "DeptName",
+                    align: "center",    // 對齊置中
+                    editable: true, // 是否可編輯欄位(有編輯功能時可用)
+                    formatter: function (cellvalue, options, rowObject) {
+                        return rowObject.Dept.Name;
+                    },
+                    sortable: true, // 是否可排序(會傳兩個參數給後端: sidx是要排序的欄位名稱；sord是排序規則，值有desc/asc)
+                    edittype: "select",
+                    editoptions: {  // 從遠端伺服器獲取資料
+                        // 連結(示範用，假的連結)，回傳須為html字串，如<select><option value='1'>研發部</option>......</select>
+                        dataUrl: "/dept/findAll",
+                    }
+                },
+            ],
+            // 注意: 一但做了分頁處理後數據返回格式必須為: 
+            pager: "#pager",    // 用來定義分頁工具欄 用來處理分頁請求: 後臺可以定義Interger page(當前頁) Interger rows(每頁顯示的筆數)
+            viewrecords: true,  // 顯示總筆數
+            rowNum: 5,  // 每頁顯示筆數，默認是20
+            rowList: [2, 10, 15, 50, 100], // 用來定義一個下拉列表，可選頁面展示多少筆數據
+            sortname: "Name",   // 根據哪個列排序，該參數會傳給後端處理 後端接收參數為: sidx
+            caption: "員工列表",   // 該table的標題及縮合表格按鈕
+            hidegrid: true, // 是否在標題下展示縮合表格按鈕 false: 不顯示 true: 顯示
+            autowidth: true,    // 自適應父容器寬度
+            height: "100%",    // 指定表格高度，可以是象素值、百分比
+            pgbuttons: false,    // 是否顯示換頁按鈕(bootstrap4的按鈕不知道為啥都不會顯示所以這邊先隱藏)
+            pginput: true,  // 是否顯示跳轉頁面的輸入框
+            editurl: "/user/edits", // CRUD時的url設定(會傳一個oper參數來辨別是什麼動作，add:新增 edit:編輯 del:刪除)
+        }).navGrid("#pager",
+            { edit: true, add: true, del: true, search: true });
+               /* 快速加入編輯功能，接收7個參數
+參數1: 將快速編輯按鈕放入哪個位置
+參數2: 展示編輯的配置對象
+參數3: 編輯列表的配置
+參數4: 新增列表的配置
+參數5: 刪除列表的配置
+參數6: 搜尋列表的配置
+參數7: 刷新列表的配置
+*/
+    </script>
+</body>
+
+</html>
