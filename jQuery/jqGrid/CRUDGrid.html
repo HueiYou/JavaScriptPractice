@@ -44,6 +44,8 @@
         // 初始化表格
         $("#table").jqGrid({    // 屬性(參考https://blog.mn886.net/jqGrid/)
             styleUI: "Bootstrap",   // 用來指定jqGrid的主題樣式，固定寫死必須是Bootstrap
+            // styleUI: "Bootstrap4",   // 用來指定jqGrid的主題樣式，固定寫死必須是Bootstrap
+            // iconSet: "fontAwesome",
             url: "listPage.json", // 用來call api參數 json格式類型 [{"id": "1", "name": "張三"}, {}]
             datatype: "json",   // 用來指定API返回的數據類型 默認值是XML，請設定該欄為json
             mtype: "GET",   // 用來指定請求方式 默認GET方式請求
@@ -72,8 +74,8 @@
                         // console.log(cellvalue); // 當前欄資料
                         // console.log(options); // 當前列配置參數資料
                         // console.log(rowObject); // 當前列全部資料(包含沒顯示的值)
-                        
-						// 注意這邊渲染的HTML值將為編輯時的值，因此如果要抓年齡值的話，就不要做二次處理渲染
+
+                        // 注意這邊渲染的HTML值將為編輯時的值，因此如果要抓年齡值的話，就不要做二次處理渲染
                         if (cellvalue > 18) {
                             return '<span style="color:green;">已成年</span>';
                         }
@@ -137,16 +139,58 @@
             pginput: true,  // 是否顯示跳轉頁面的輸入框
             editurl: "/user/edits", // CRUD時的url設定(會傳一個oper參數來辨別是什麼動作，add:新增 edit:編輯 del:刪除)
         }).navGrid("#pager",
-            { edit: true, add: true, del: true, search: true });
-               /* 快速加入編輯功能，接收7個參數
-參數1: 將快速編輯按鈕放入哪個位置
-參數2: 展示編輯的配置對象
-參數3: 編輯列表的配置
-參數4: 新增列表的配置
-參數5: 刪除列表的配置
-參數6: 搜尋列表的配置
-參數7: 刷新列表的配置
-*/
+            {
+                add: true,
+                addicon: 'ace-icon fa fa-plus-circle purple',
+                addtitle: '新增',
+                addtext: '新增',
+
+                edit: true,
+                editicon: 'ace-icon fa fa-pencil blue',
+                edittitle: '修改',
+                edittext: '修改',
+
+                del: true,
+                delicon: 'ace-icon fa fa-trash-o red',
+                deltext: '删除',
+                deltitle: '刪除所選擴展',
+
+                search: true,
+                searchicon: 'ace-icon fa fa-search orange',
+                searchtext: '查找',
+
+                refresh: true,
+                refreshicon: 'ace-icon fa fa-refresh green',
+                refreshtext: '刷新',
+
+                view: true,
+                viewicon: 'ace-icon fa fa-search-plus grey',
+                viewtext: '查看',
+            },
+            {
+                height: 600,
+                width: 700,
+                closeAfterEdit: true,   // 儲存操作後關閉編輯視窗
+                reloadAfterSubmit: true,    // 操作完成後,是否重新加載資料
+            },  // 編輯列表的配置
+            {
+                height: 600,
+                width: 700,
+                closeAfterAdd: true,   // 儲存操作後關閉編輯視窗
+                reloadAfterSubmit: true,    // 操作完成後,是否重新加載資料
+            },  // 新增列表的配置
+            {
+                height: 600,
+                width: 700,
+                closeAfterDelete: true,   // 儲存操作後關閉編輯視窗
+                reloadAfterSubmit: true,    // 操作完成後,是否重新加載資料
+            },  // 刪除列表的配置
+            {
+                // 開放的搜尋條件(包含, 等於, 不等於, 小於, 大於)
+                sopt: ['cn', 'eq', 'ne', 'lt', 'gt']
+            },  // 搜尋列表的配置(會向後端傳三個參數: searchField是搜尋的欄位名稱；searchString是搜尋字串; searchOper是比較方式)
+            // 刷新列表的配置
+        );
     </script>
 </body>
 
