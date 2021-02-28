@@ -40,6 +40,9 @@
 
     <!-- 定義展示分頁的標籤(可以該頁面任何地方加該標籤，jqGrid會根據id自動綁定到表格內) -->
     <div id="pager"></div>
+
+    <button type="button" onclick="funClear()">清除數據</button>
+
     <script>
         /**
          * 1. jqgrid的表格屬性使用方式: 將屬性以對象(物件)方式作為jqgrid的參數進行傳遞即可，格式為 屬性名:屬性值 書寫
@@ -218,6 +221,12 @@
                 // 點擊觸發事件
             }
         });
+
+        // 清除列表數據
+        function funClear() {
+            $("#table").jqGrid("clearGridData", true);  // 清除資料
+            $("#table").jqGrid("setCaption", "測試");    // 更換列表標題
+        }
     </script>
 </body>
 
