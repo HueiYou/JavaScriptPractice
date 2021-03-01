@@ -42,6 +42,7 @@
     <div id="pager"></div>
 
     <button type="button" onclick="funClear()">清除數據</button>
+    <button type="button" onclick="funReload()">重新讀取數據</button>
 
     <script>
         /**
@@ -145,7 +146,7 @@
             hidegrid: true, // 是否在標題下展示縮合表格按鈕 false: 不顯示 true: 顯示
             autowidth: true,    // 自適應父容器寬度
             height: "100%",    // 指定表格高度，可以是象素值、百分比
-            pgbuttons: false,    // 是否顯示換頁按鈕(bootstrap4的按鈕不知道為啥都不會顯示所以這邊先隱藏)
+            pgbuttons: true,    // 是否顯示換頁按鈕(改套用bootstrap3的按鈕icon，bootstrap4的按鈕不知道為啥都不會顯示)
             pginput: true,  // 是否顯示跳轉頁面的輸入框
             editurl: "/user/edits", // CRUD時的url設定(會傳一個oper參數來辨別是什麼動作，add:新增 edit:編輯 del:刪除)
             gridComplete: function () {   // 事件使用，當初次載入和重載grid時都會觸發
@@ -156,6 +157,14 @@
                 console.log(iCol);  // 行索引值(從1開始)
                 console.log(cellcontent);   // 該欄值
                 console.log(e); // 觸發事件的元素
+
+                // 取得指定列的資料
+                var row = $("#table").jqGrid('getRowData', rowid);
+                console.log(row);
+
+                // 取得指定單元格資料
+                var cell = $("#table").jqGrid('getCell', rowid, iCol);
+                console.log(cell);
             }
         }).navGrid("#pager",
             {
@@ -226,6 +235,11 @@
         function funClear() {
             $("#table").jqGrid("clearGridData", true);  // 清除資料
             $("#table").jqGrid("setCaption", "測試");    // 更換列表標題
+        }
+
+        // 重新加載當前列表，也會向伺服器發起新的請求
+        function funReload() {
+            $("#table").trigger("reloadGrid");
         }
     </script>
 </body>
