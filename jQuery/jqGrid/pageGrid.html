@@ -96,11 +96,14 @@
                     }
                 },
             ],
+			loadComplete: function (data) {	// 加載完grid資料後處理
+			   $(".ui-pg-selbox option[value='All']").val(100000000);	// 因jqGrid不支援All分頁，故手動設定All分頁筆數
+			},
             // 注意: 一但做了分頁處理後數據返回格式必須為: 
             pager: "#pager",    // 用來定義分頁工具欄 用來處理分頁請求: 後臺可以定義Interger page(當前頁) Interger rows(每頁顯示的筆數)
             viewrecords: true,  // 顯示總筆數
-            rowNum: 5,  // 每頁顯示筆數，默認是20
-            rowList: [2, 10, 15, 50, 100], // 用來定義一個下拉列表，可選頁面展示多少筆數據
+            rowNum: 1,  // 每頁顯示筆數，默認是20
+            rowList: [2, 10, 15, 50, 100, 'All'], // 用來定義一個下拉列表，可選頁面展示多少筆數據
             sortname: "Name",   // 根據哪個列排序，該參數會傳給後端處理 後端接收參數為: sidx
             caption: "員工列表",   // 該table的標題及縮合表格按鈕
             hidegrid: true, // 是否在標題下展示縮合表格按鈕 false: 不顯示 true: 顯示
